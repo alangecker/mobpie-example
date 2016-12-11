@@ -1,0 +1,47 @@
+<html>
+<head>
+  <title>mobpie example</title>
+  <script src="node_modules/socket.io-client/dist/socket.io.js" type="text/javascript"></script>
+  <script src="node_modules/mobpie/dist/frontend.js" type="text/javascript"></script>
+</head>
+<body>
+
+  <div>
+    <b>Current:</b> <span id="text"></span>
+  </div>
+  <div>
+    <input type="text" id="input" onKeyDown="onKeyDown(event)" value="" placeholder="change value..."/>
+  </div>
+
+  <script>
+
+    var api = new Mobpie;
+    var textElement = document.getElementById('text');
+    var inputElement = document.getElementById('input');
+
+
+    api.connect('http://localhost:5000', function(err) {
+      if(err) {
+        console.log('MobpieError: '+err);
+      } else {
+        api.demo.getText( function(err, res) {
+          textElement.innerText = res;
+        });
+      }
+    });
+
+
+    function onKeyDown(e) {
+      if(e.key == 'Enter') {
+        api.demo.setText(inputElement.value);
+        inputElement.value = '';
+      }
+    }
+
+  </script>
+
+
+
+
+</body>
+</html>
