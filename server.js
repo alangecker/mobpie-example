@@ -1,4 +1,4 @@
-const MobpieBackend = require('../mobpie')
+const MobpieBackend = require('mobpie')
 const observable = require('mobx').observable
 const httpServer = require('http').createServer()
 const backend = new MobpieBackend(httpServer)
@@ -11,11 +11,11 @@ let text = observable({
 
 
 backend.register('demo', {
-  getText(req) {
-    req.send(null, text.welcome)
+  getText(cb) {
+    cb(null, text.welcome)
   },
-  setText(req) {
-    text.welcome = req.params[0]
-    console.log(`set to '${req.params[0]}'`);
+  setText(value) {
+    text.welcome = value
+    console.log(`set to '${value}'`);
   }
 })
